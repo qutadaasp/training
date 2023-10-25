@@ -9,5 +9,6 @@ namespace WebApplication6.Models
 
         }
         public DbSet<Genre> Genres { get; set; }
+        public DbSet<Movies> Movies { get; set; }
     }
 }

@@ -23,11 +23,11 @@ namespace WebApplication6.Migrations
 
             modelBuilder.Entity("WebApplication6.Models.Genre", b =>
                 {
-                    b.Property<byte>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("tinyint");
+                        .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<byte>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -37,6 +37,58 @@ namespace WebApplication6.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Genres");
+                });
+
+            modelBuilder.Entity("WebApplication6.Models.Movies", b =>
+                {
+                    b.Property<int>("id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"));
+
+                    b.Property<int>("GenreId")
+                        .HasColumnType("int");
+
+                    b.Property<byte>("Genreid")
+                        .HasColumnType("tinyint");
+
+                    b.Property<double>("Rate")
+                        .HasColumnType("float");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(250)
+                        .HasColumnType("nvarchar(250)");
+
+                    b.Property<byte[]>("poster")
+                        .IsRequired()
+                        .HasColumnType("varbinary(max)");
+
+                    b.Property<string>("storeline")
+                        .IsRequired()
+                        .HasMaxLength(2500)
+                        .HasColumnType("nvarchar(2500)");
+
+                    b.Property<int>("year")
+                        .HasColumnType("int");
+
+                    b.HasKey("id");
+
+                    b.HasIndex("GenreId");
+
+                    b.ToTable("Movies");
+                });
+
+            modelBuilder.Entity("WebApplication6.Models.Movies", b =>
+                {
+                    b.HasOne("WebApplication6.Models.Genre", "Genre")
+                        .WithMany()
+                        .HasForeignKey("GenreId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Genre");
                 });
 #pragma warning restore 612, 618
         }
